@@ -3,7 +3,7 @@ require '.config/environment'
 class ApplicationController < Sinatra::Base
   set :views, Proc.new { File.join(root, "../views/") }
 
-  
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -13,22 +13,22 @@ class ApplicationController < Sinatra::Base
       erb :new
     end
 
-    get '/recipes' do 
+    get '/recipes' do
       @recipes = Recipe.all
       erb :index
     end
 
-    get '/recipes/:id' do  
+    get '/recipes/:id' do
       @recipe = Recipe.find_by_id(params[:id])
       erb :show
     end
 
-    get '/recipes/:id/edit' do 
+    get '/recipes/:id/edit' do
       @recipe = Recipe.find_by_id(params[:id])
       erb :edit
     end
 
-    patch '/recipes/:id' do 
+    patch '/recipes/:id' do
       @recipe = Recipe.find_by_id(params[:id])
       @recipe.name = params[:name]
       @recipe.ingredients = params[:ingredients]
@@ -37,12 +37,12 @@ class ApplicationController < Sinatra::Base
       redirect to "/recipes/#{@recipe.id}"
     end
 
-    post '/recipes' do  
+    post '/recipes' do
       @recipe = Recipe.create(params)
       redirect to "/recipes/#{@recipe.id}"
     end
 
-    delete '/recipes/:id' do 
+    delete '/recipes/:id' do
       @recipe = Recipe.find_by_id(params[:id])
       @recipe.delete
       redirect to '/recipes'
